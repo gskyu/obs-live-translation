@@ -71,9 +71,7 @@
             /*word-break: break-all;*/
             overflow-wrap: break-word;
         }
-    </style>
 
-    <style>
         /* prepare the selectors to add a stroke to */
 
         .stroke-single-imb {
@@ -99,6 +97,20 @@
             right: 0;
             margin: auto;
             /* -webkit-text-stroke: 0px #FFFFFF; */
+        }
+
+        #text_speech {
+            width: 100%;
+            text-align: center;
+            position: fixed;
+            top:0;
+            height: 80%
+        }
+        #text_translated {
+            width: 100%;
+            text-align: center;
+            position: fixed;
+            bottom:0;
         }
     </style>
 
@@ -231,39 +243,28 @@
     </script>
 </head>
 
-
-
-
-
-
 <body>
-    <div class="big" id="result_text">
-        <table id="text_table" class="btm_table">
-            <tr>
-                <td id="tbl_td_speech" align="center" valign='top'>
-                    <div class="stroke-single-bg" id="speech_text-bg">
-                        [ TRANSLATING HERE ]
-                    </div>
-                    <div class="stroke-single-fg" id="speech_text-fg">
-                        [ TRANSLATING HERE ]
-                    </div>
-                    <div class="stroke-single-imb" id="speech_text-imb">
-                        [ TRANSLATING HERE ]
-                    </div>
-                </td>
-                <td id="tbl_td_trans" align="center" valign='bottom'>
-                    <div class="stroke-single-bg" id="trans_text-bg">
+    <div id="text_speech">
+        <div class="stroke-single-bg" id="speech_text-bg">
+            [ TRANSLATING HERE ]
+        </div>
+        <div class="stroke-single-fg" id="speech_text-fg">
+            [ TRANSLATING HERE ]
+        </div>
+        <div class="stroke-single-imb" id="speech_text-imb">
+            [ TRANSLATING HERE ]
+        </div>
+    </div>
+    <div id="text_translated">
+        <div class="stroke-single-bg" id="trans_text-bg">
 
-                    </div>
-                    <div class="stroke-single-fg" id="trans_text-fg">
+        </div>
+        <div class="stroke-single-fg" id="trans_text-fg">
 
-                    </div>
-                    <div class="stroke-single-imb" id="trans_text-imb">
+        </div>
+        <div class="stroke-single-imb" id="trans_text-imb">
 
-                    </div>
-                </td>
-            </tr>
-        </table>
+        </div>
     </div>
 </body>
 
