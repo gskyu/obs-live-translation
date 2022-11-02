@@ -195,12 +195,7 @@
                 var results = event.results;
                 for (var i = event.resultIndex; i < results.length; i++) {
                     if (results[i].isFinal) {
-                        // console.log(results);
                         recog_text = results[i][0].transcript;
-
-                        // document.getElementById('speech_text-imb').innerHTML = recog_text;
-                        // document.getElementById('speech_text-bg').innerHTML = recog_text;
-                        // document.getElementById('speech_text-fg').innerHTML = recog_text;
 
                         if (gs_key != null) {
                             query = TRANS_URL + '?text=' + recog_text + '&source=' + trans_sourcelang + '&target=' + trans_destlang;
@@ -208,9 +203,6 @@
 
                             request.onreadystatechange = function () {
                                 if (request.readyState === 4 && request.status === 200) {
-                                    // document.getElementById('speech_text-imb').innerHTML = recog_text;
-                                    // document.getElementById('speech_text-bg').innerHTML = recog_text;
-                                    // document.getElementById('speech_text-fg').innerHTML = recog_text;
                                     document.getElementById('trans_text-imb').innerHTML = request.responseText;
                                     document.getElementById('trans_text-bg').innerHTML = request.responseText;
                                     document.getElementById('trans_text-fg').innerHTML = request.responseText;
@@ -248,7 +240,7 @@
     <div class="big" id="result_text">
         <table id="text_table" class="btm_table">
             <tr>
-                <td id="tbl_td" align="center" valign='bottom'>
+                <td id="tbl_td_speech" align="center" valign='top'>
                     <div class="stroke-single-bg" id="speech_text-bg">
                         [ TRANSLATING HERE ]
                     </div>
@@ -258,7 +250,8 @@
                     <div class="stroke-single-imb" id="speech_text-imb">
                         [ TRANSLATING HERE ]
                     </div>
-
+                </td>
+                <td id="tbl_td_trans" align="center" valign='bottom'>
                     <div class="stroke-single-bg" id="trans_text-bg">
 
                     </div>
