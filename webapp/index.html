@@ -29,22 +29,6 @@
             /* Legacy iOS */
         }
 
-        button,
-        input,
-        select,
-        textarea {
-            /* font-family : inherit; */
-            /* font-size   : 300%; */
-            /* color  : black; */
-            font-weight: 0;
-            text-align: center;
-            /* left, center, right */
-            vertical-align: top;
-            /* top, middle, bottom */
-            -webkit-text-stroke-color: rgb(21, 0, 141);
-            -webkit-text-stroke-width: 0px;
-        }
-
         html {
             height: 100%;
             width: 100%;
@@ -55,33 +39,19 @@
             width: 100%;
             margin: 0;
             font-family: 'Cousine', sans-serif;
-        }
-
-        table {
-            width: 100%;
-            /* table-layout: fixed; */
-        }
-
-        table.btm_table {
-            position: absolute;
-            /* bottom:0; */
-        }
-
-        table td {
-            /*word-break: break-all;*/
+            font-weight: 100;
+            font-size: x-large;
+            color: white;
+            text-align: center;
             overflow-wrap: break-word;
         }
-    </style>
 
-    <style>
         /* prepare the selectors to add a stroke to */
-
         .stroke-single-imb {
             /* position: absolute; */
             left: 0;
             right: 0;
             margin: 0;
-            /* -webkit-text-stroke: 0px #0000FF;  */
         }
 
         .stroke-single-bg {
@@ -89,7 +59,6 @@
             left: 0;
             right: 0;
             margin: auto;
-            /* -webkit-text-stroke: 3px #FF0000;  */
         }
 
         /* add a single stroke */
@@ -98,19 +67,16 @@
             left: 0;
             right: 0;
             margin: auto;
-            /* -webkit-text-stroke: 0px #FFFFFF; */
         }
 
         #text_speech {
             width: 100%;
-            text-align: center;
             position: fixed;
             top:0;
-            height: 80%
         }
+
         #text_translated {
             width: 100%;
-            text-align: center;
             position: fixed;
             bottom:0;
         }
