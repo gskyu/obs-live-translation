@@ -80,6 +80,17 @@
             position: fixed;
             bottom:0;
         }
+
+        .container {
+            margin: 0 auto;
+            width: 400px;
+            padding: 10px;
+        }
+
+        span {
+            background-color: black;
+            color: #FFF;
+        }
     </style>
 
     <script>
@@ -183,24 +194,18 @@
 
                             request.onreadystatechange = function () {
                                 if (request.readyState === 4 && request.status === 200) {
-                                    document.getElementById('trans_text-imb').innerHTML = request.responseText;
-                                    document.getElementById('trans_text-bg').innerHTML = request.responseText;
-                                    document.getElementById('trans_text-fg').innerHTML = request.responseText;
+                                    document.getElementById('translated-text').innerHTML = request.responseText;
                                 }
                                 vr_function();
                             }
                             request.send(null);
                         } else {
-                            document.getElementById('speech_text-imb').innerHTML = recog_text;
-                            document.getElementById('speech_text-bg').innerHTML = recog_text;
-                            document.getElementById('speech_text-fg').innerHTML = recog_text;
+                            document.getElementById('speech-text').innerHTML = recog_text;
                             vr_function();
                         }
                     }
                     else {
-                        document.getElementById('speech_text-imb').innerHTML = "<< " + results[i][0].transcript + " >>";
-                        document.getElementById('speech_text-bg').innerHTML = "<< " + results[i][0].transcript + " >>";
-                        document.getElementById('speech_text-fg').innerHTML = "<< " + results[i][0].transcript + " >>";
+                        document.getElementById('speech-text').innerHTML = "<< " + results[i][0].transcript + " >>";
                         flag_speech = 1;
                     }
                 }
@@ -213,25 +218,13 @@
 
 <body>
     <div id="text_speech">
-        <div class="stroke-single-bg" id="speech_text-bg">
-            [ TRANSLATING HERE ]
-        </div>
-        <div class="stroke-single-fg" id="speech_text-fg">
-            [ TRANSLATING HERE ]
-        </div>
-        <div class="stroke-single-imb" id="speech_text-imb">
-            [ TRANSLATING HERE ]
+        <div class="stroke-single-imb container" id="speech_text-imb">
+            <span id="speech-text">[ TRANSLATING HERE ]</span>
         </div>
     </div>
     <div id="text_translated">
-        <div class="stroke-single-bg" id="trans_text-bg">
-
-        </div>
-        <div class="stroke-single-fg" id="trans_text-fg">
-
-        </div>
-        <div class="stroke-single-imb" id="trans_text-imb">
-
+        <div class="stroke-single-imb container" id="trans_text-imb">
+            <span id="translated-text"></span>
         </div>
     </div>
 </body>
@@ -252,20 +245,20 @@
 
     // Adjust the background color
     if (getParam('bgcolor') != null) {
-        document.getElementById("speech_text-imb").style.webkitTextStrokeColor = getParam('bgcolor');
+        document.getElementById("speech-text").style.webkitTextStrokeColor = getParam('bgcolor');
     }
 
     if (getParam('st_width') != null) {
-        document.getElementById("speech_text-imb").style.webkitTextStrokeWidth = getParam('st_width') + 'pt';
+        document.getElementById("speech-text").style.webkitTextStrokeWidth = getParam('st_width') + 'pt';
     }
 
 
     if (getParam('bgcolor') != null) {
-        document.getElementById("trans_text-imb").style.webkitTextStrokeColor = getParam('bgcolor');
+        document.getElementById("translated-text").style.webkitTextStrokeColor = getParam('bgcolor');
     }
 
     if (getParam('st_width') != null) {
-        document.getElementById("trans_text-imb").style.webkitTextStrokeWidth = getParam('st_width') + 'pt';
+        document.getElementById("translated-text").style.webkitTextStrokeWidth = getParam('st_width') + 'pt';
     }
 
 
