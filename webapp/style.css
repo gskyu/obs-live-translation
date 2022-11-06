@@ -1,0 +1,54 @@
+/* cousine-regular - latin */
+@font-face {
+    font-family: 'Cousine';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./fonts/cousine-v17-latin-regular.eot');
+    /* IE9 Compat Modes */
+    src: local(''),
+        url('./fonts/cousine-v17-latin-regular.eot?#iefix') format('embedded-opentype'),
+        /* IE6-IE8 */
+        url('./fonts/cousine-v17-latin-regular.woff2') format('woff2'),
+        /* Super Modern Browsers */
+        url('./fonts/cousine-v17-latin-regular.woff') format('woff'),
+        /* Modern Browsers */
+        url('./fonts/cousine-v17-latin-regular.ttf') format('truetype'),
+        /* Safari, Android, iOS */
+        url('./fonts/cousine-v17-latin-regular.svg#Cousine') format('svg');
+    /* Legacy iOS */
+}
+
+/* HTML elements */
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    background-color: orange;
+}
+
+span {
+    background-color: black;
+    color: white;
+    font-family: 'Cousine', sans-serif;
+    font-weight: 900;
+    font-size: x-large;
+    overflow-wrap: break-word;
+}
+
+/* classes */
+.speech-text-container {
+    width: 100%;
+    position: fixed;
+    top:0;
+}
+
+.translated-text-container {
+    width: 100%;
+    position: fixed;
+    bottom:0;
+}
+
+.text-container {
+    margin: 10px;
+}
