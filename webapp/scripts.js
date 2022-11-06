@@ -1,111 +1,83 @@
-var flag_speech = 0;
-
 // #region SPEECH RECOGNITION
+const defaultSourceLangage = "fr-FR"
+const defaultTargetLangage = "en-US"
+
+const sourceLangageParameterName = "source-langage"
+const targetLangageParameterName = "target-langage"
+const googleScriptDeploymentIdParameterName = "google-script-deployment-id"
+
+// Lookup right lib.
+var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
+var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
+var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
+var sourceLangage = getQueryParameterValue(sourceLangageParameterName) || defaultSourceLangage;
+var targetLangage = getQueryParameterValue(targetLangageParameterName) || defaultTargetLangage; 
+
 // Speech recognition starts when window is loaded
 window.onload = function () {
-    vr_function();
+    setupSpeechRecognition();
 }
 
-function vr_function() {
-    window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
-
+function setupSpeechRecognition() {
     // Settings for voice recognition
-    var recognition = new webkitSpeechRecognition();
-    recognition.lang = 'en';
+    var recognition = new SpeechRecognition();
     recognition.interimResults = true;
     recognition.continuous = true;
-    var recog_text = '';
-
-    // Translation settings
-    var trans_sourcelang = 'en';
-    var trans_destlang = 'pt-BR';
-
-    var gs_key = getParam('gs_key');
-    var TRANS_URL = 'https://script.google.com/macros/s/' + gs_key + '/exec';
-    var query = ''
+    recognition.lang = sourceLangage;
 
     // Events, official documentation at https://developer.mozilla.org/fr/docs/Web/API/SpeechRecognition#event_handlers
-    recognition.onsoundstart = function () {
-        // document.getElementById('status').innerHTML = "Listening";
+    recognition.onerror = function () { 
+        recognition.stop();
+        setupSpeechRecognition();
     };
-    recognition.onspeechstart = function () {
-        // document.getElementById('status').innerHTML = "Listening";
+    recognition.onspeechend = () => { 
+        recognition.stop();
+        setupSpeechRecognition();
     };
-    recognition.onnomatch = function () {
-        // document.getElementById('status').innerHTML = "Please try again";
+    recognition.onsoundend = () => { 
+        recognition.stop();
+        setupSpeechRecognition();
     };
-    recognition.onerror = function () {
-        // document.getElementById('status').innerHTML = "Error";
-        vr_function();
+    recognition.onresult = function(event) {
+        translateSpeechText(
+            event, 
+            sourceLangage, 
+            targetLangage, 
+            getQueryParameterValue(googleScriptDeploymentIdParameterName) || undefined);
     };
-    recognition.onsoundend = function () {
-        // document.getElementById('status').innerHTML = "Stopping";
-        recognition.stop()
-        vr_function();
-    };
-    recognition.onspeechend = function () {
-        // document.getElementById('status').innerHTML = "Stopping";
-        recognition.stop()
-        vr_function();
-    };
+    recognition.start();
+}
 
-    
-    // URL parameters
-    arg_recog = getParam('recog');
-    arg_trans = getParam('trans');
-
-    // Language setting
-    if (arg_recog != null) {
-        recognition.lang = arg_recog;
-        trans_sourcelang = recognition.lang;
+function translateSpeechText(event, sourceLangage, targetLangage, googleScriptDeploymentId) {
+    if (googleScriptDeploymentId == undefined) {
+        throw new InvalidOperationException("googleScriptDeploymentId parameters should not be undefined, please provide a value to parameter named google-script-deployment-id.")
     }
-    if (arg_trans != null) {
-        trans_destlang = arg_trans;
-    }
+    var results = event.results;
+    for (var i = event.resultIndex; i < results.length; i++) {
+        if (results[i].isFinal) {
+            var googleScriptUri = 'https://script.google.com/macros/s/' + googleScriptDeploymentId + '/exec'
+            var query = googleScriptUri + '?text=' + results[i][0].transcript + '&source=' + sourceLangage + '&target=' + targetLangage;
 
-    if (trans_sourcelang == trans_destlang) {
-        alert("ERROR! Please set different language between recog and trans!\nYou set both [" + trans_sourcelang + "]!");
-    }
+            var request = new XMLHttpRequest();
+            request.open('GET', query, true);
 
-    // API settings
-    var request = new XMLHttpRequest();
-
-    // When the recognition result is returned
-    recognition.onresult = function (event) {
-        var results = event.results;
-        for (var i = event.resultIndex; i < results.length; i++) {
-            if (results[i].isFinal) {
-                recog_text = results[i][0].transcript;
-
-                if (gs_key != null) {
-                    query = TRANS_URL + '?text=' + recog_text + '&source=' + trans_sourcelang + '&target=' + trans_destlang;
-                    request.open('GET', query, true);
-
-                    request.onreadystatechange = function () {
-                        if (request.readyState === 4 && request.status === 200) {
-                            document.getElementById('translated-text').innerHTML = request.responseText;
-                        }
-                        vr_function();
-                    }
-                    request.send(null);
-                } else {
-                    document.getElementById('speech-text').innerHTML = recog_text;
-                    vr_function();
+            request.onreadystatechange = function () {
+                if (request.readyState === 4 && request.status === 200) {
+                    document.getElementById('translated-text').innerHTML = request.responseText;
                 }
+                setupSpeechRecognition();
             }
-            else {
-                document.getElementById('speech-text').innerHTML = "<< " + results[i][0].transcript + " >>";
-                flag_speech = 1;
-            }
+            request.send(null);
+        }
+        else {
+            document.getElementById('speech-text').innerHTML = "<< " + results[i][0].transcript + " >>";
         }
     }
-    flag_speech = 0;
-    recognition.start();
 }
 // #endregion
 
 // #region PARAMETERS PROCESSING
-function getParam(name, url) {
+function getQueryParameterValue(name, url) {
     if (!url) url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
