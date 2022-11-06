@@ -18,65 +18,36 @@
     /* Legacy iOS */
 }
 
-html {
-    height: 100%;
-    width: 100%;
-}
-
+/* HTML elements */
 body {
     height: 100%;
     width: 100%;
     margin: 0;
-    font-family: 'Cousine', sans-serif;
-    font-weight: 100;
-    font-size: xx-large;
-    color: white;
     text-align: center;
+}
+
+span {
+    background-color: black;
+    color: white;
+    font-family: 'Cousine', sans-serif;
+    font-weight: 200;
+    font-size: xx-large;
     overflow-wrap: break-word;
 }
 
-/* prepare the selectors to add a stroke to */
-.stroke-single-imb {
-    /* position: absolute; */
-    left: 0;
-    right: 0;
-    margin: 0;
-}
-
-.stroke-single-bg {
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: auto;
-}
-
-/* add a single stroke */
-.stroke-single-fg {
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: auto;
-}
-
-#text_speech {
+/* classes */
+.speech-text-container {
     width: 100%;
     position: fixed;
     top:0;
 }
 
-#text_translated {
+.translated-text-container {
     width: 100%;
     position: fixed;
     bottom:0;
 }
 
-.container {
-    margin: 0 auto;
-    width: 400px;
-    padding: 10px;
-}
-
-span {
-    background-color: black;
-    color: #FFF;
+.text-container {
+    margin: 10px;
 }
