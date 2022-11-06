@@ -26,17 +26,17 @@ function setupSpeechRecognition() {
     recognition.lang = sourceLangage;
 
     // Events, official documentation at https://developer.mozilla.org/fr/docs/Web/API/SpeechRecognition#event_handlers
+    recognition.onend = function(event) {
+        recognition.start();
+    }
     recognition.onerror = function () { 
         recognition.stop();
-        setupSpeechRecognition();
     };
     recognition.onspeechend = () => { 
         recognition.stop();
-        setupSpeechRecognition();
     };
     recognition.onsoundend = () => { 
         recognition.stop();
-        setupSpeechRecognition();
     };
     recognition.onresult = function(event) {
         translateSpeechText(
@@ -65,7 +65,6 @@ function translateSpeechText(event, sourceLangage, targetLangage, googleScriptDe
                 if (request.readyState === 4 && request.status === 200) {
                     document.getElementById('translated-text').innerHTML = request.responseText;
                 }
-                setupSpeechRecognition();
             }
             request.send(null);
         }
