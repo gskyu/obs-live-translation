@@ -24,14 +24,15 @@ body {
     width: 100%;
     margin: 0;
     text-align: center;
+    background-color: orange;
 }
 
 span {
     background-color: black;
     color: white;
     font-family: 'Cousine', sans-serif;
-    font-weight: 200;
-    font-size: xx-large;
+    font-weight: 900;
+    font-size: x-large;
     overflow-wrap: break-word;
 }
 
